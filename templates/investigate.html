@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}CTI Sentinel — Investigate{% endblock %}
+{% block content %}
+<section class="page-title"><div class="eyebrow">ANALYST WORKBENCH</div><h1>Investigate <span>live intelligence</span></h1><p>Query multiple CTI sources without allowing one provider failure to break the investigation. Files can be hashed, enriched and optionally submitted to an isolated Cuckoo3 sandbox.</p></section>
+<section class="search-card investigator-card">
+  <div class="mode-tabs"><button class="mode active" data-mode="URL" data-placeholder="https://example.com/path">URL</button><button class="mode" data-mode="IP" data-placeholder="8.8.8.8">IP</button><button class="mode" data-mode="HASH" data-placeholder="SHA256 / SHA1 / MD5">HASH</button><button class="mode" data-mode="FILE" data-placeholder="Upload any file format">FILE</button></div>
+  <form id="investigate-form"><div class="search-input-wrap"><span>⌕</span><input id="investigator-input" type="text" value="https://example.com" placeholder="Enter a URL, IP address or file hash" autocomplete="off"></div><input id="file-input" type="file" hidden><button class="primary-btn" id="file-select" type="button" hidden>Select file <b>＋</b></button><button class="primary-btn" id="analyze-btn" type="submit">Analyze <b>→</b></button></form>
+  <div class="analysis-options" id="analysis-options"><label><input type="checkbox" id="deep-vt-scan"> <span>Request fresh VirusTotal URL analysis</span></label><label><input type="checkbox" id="refresh-vt-analysis"> <span>Refresh VirusTotal IP analysis</span></label><label class="sandbox-option"><input type="checkbox" id="sandbox-file" checked> <span>Submit file to Cuckoo3 when configured</span></label></div>
+  <div class="notice info"><b>Quick test:</b> A safe example URL is prefilled. Click Analyze to test the analysis pipeline, then replace it with an indicator you are authorized to investigate.<br><b>Privacy:</b> VirusTotal submissions can become part of its dataset. Do not submit confidential samples unless authorized. Cuckoo3 runs separately in an isolated analysis environment.</div>
+</section>
+<div id="investigation-result" class="result-stack"></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/investigate.js') }}"></script>{% endblock %}

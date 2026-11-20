@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}CTI Sentinel — Reports{% endblock %}
+{% block content %}
+<section class="page-title"><div class="eyebrow">KNOWLEDGE LAYER</div><h1>Intelligence <span>reports</span></h1><p>Every investigation is persisted as a report. Static security reports and live analysis reports share one searchable library.</p></section>
+<section class="search-card compact-search"><div class="search-input-wrap"><span>⌕</span><input id="report-search" placeholder="Search indicator, filename or report title"></div><button class="secondary-btn" id="report-refresh">Refresh</button></section>
+<section class="panel"><div class="report-toolbar"><span id="report-count">Loading reports…</span><span class="muted">Click any report to open the full evidence view.</span></div><div class="report-grid large" id="reports"></div></section>
+{% endblock %}
+{% block scripts %}<script>
+async function loadReports(){const q=document.getElementById('report-search').value.trim();const r=await fetch('/api/reports?limit=200&q='+encodeURIComponent(q));const rows=await r.json();document.getElementById('report-count').textContent=`${rows.length} report${rows.length===1?'':'s'}`;const esc=CTI.escape;document.getElementById('reports').innerHTML=rows.map(x=>`<a class="report-card clickable" href="/reports/${esc(x.report_id)}"><div class="report-card-top"><span class="report-tag ${String(x.threat_level||'INFO').toLowerCase()}">${esc(x.threat_level||'INFO')}</span><span class="report-kind">${esc(x.kind||'report')}</span></div><h3>${esc(x.title||'Untitled report')}</h3><p>${esc(x.indicator||x.filename||'Security intelligence')}</p><code>${esc(x.sha256 || (x.threat_score!=null ? ('Score: '+x.threat_score) : ''))}</code><small>${CTI.time(x.publication_date)}</small></a>`).join('')||'<div class="empty-state">No reports found. Run an investigation to create the first dynamic report.</div>'}
+document.getElementById('report-refresh').onclick=loadReports;let timer;document.getElementById('report-search').oninput=()=>{clearTimeout(timer);timer=setTimeout(loadReports,250)};loadReports().catch(e=>CTI.toast(e.message,'error'));
+</script>{% endblock %}

@@ -1,0 +1,30 @@
+{
+  "model_id": "cti-sentinel-url-classifier-v1",
+  "model_version": "1.0.0",
+  "selected_algorithm": "logistic_regression",
+  "decision_threshold": 0.195,
+  "validation_false_positive_rate": 0.000465,
+  "validation_fpr_target_met": true,
+  "label_mapping": {
+    "0": "BENIGN",
+    "1": "MALICIOUS"
+  },
+  "input_contract": "One raw URL string; no webpage retrieval or external network access.",
+  "feature_extractor": "TfidfVectorizer(analyzer=char, ngram_range=(3,5))",
+  "trained_at_utc": "2026-11-20T16:22:08.295602+00:00",
+  "dataset_sha256": "ea589b8a9b092c2407a889aa4ba32ddad41ab02dfed55190996a93a2cdb60e55",
+  "dataset_rows": 234896,
+  "dataset_class_counts": {
+    "benign": 134849,
+    "malicious": 100047
+  },
+  "dataset_sources": [
+    "PhiUSIIL-UCI"
+  ],
+  "split_strategy": "StratifiedGroupKFold with registrable-domain grouping; validation threshold is selected without test-set tuning.",
+  "temporal_holdout": "Not applied because the benchmark does not provide a uniform per-URL capture timestamp across all source records.",
+  "coverage_note": "When optional PhishTank/URLhaus feeds are absent, the malicious class is primarily phishing URLs from PhiUSIIL; this is not a universal malware URL benchmark.",
+  "scikit_learn_version": "1.6.1",
+  "joblib_version": "1.4.2",
+  "quick_smoke_training": false
+}

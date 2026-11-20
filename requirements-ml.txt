@@ -1,0 +1,7 @@
+# Runtime inference dependencies used by the Flask frontend.
+# Keep versions aligned with the training environment that created the artifact.
+numpy==2.1.3
+scipy==1.15.2
+scikit-learn==1.6.1
+joblib==1.4.2
+huggingface_hub==1.4.1

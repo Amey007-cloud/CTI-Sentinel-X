@@ -1,0 +1,51 @@
+CTI SENTINEL X — WINDOWS QUICK START
+
+Requirements:
+- Docker Desktop installed and running.
+- Python 3.11+ available in PATH.
+- Internet access for first build / dependency installation.
+
+Open PowerShell in this project directory and run:
+
+    python setup_and_run.py
+
+The bootstrapper:
+- creates .env with fresh random local credentials if absent
+- builds the FastAPI backend and Flask web image
+- starts MongoDB, backend and frontend with Docker Compose
+- waits for health checks
+
+Recovered-data note: this project configuration keeps the original Windows MongoDB server as the application data source. The Flask container uses `host.docker.internal:27017/cti_sentinel`; the FastAPI container uses `host.docker.internal:27017/cti_sentinel_final`. Keep the Windows MongoDB service running. The separate Compose MongoDB container is available on host port 27018 but is not used by the two app containers in this configuration.
+
+Open:
+- Web UI: http://localhost:5000
+- API docs: http://localhost:8000/docs
+- API health: http://localhost:8000/health
+- Recovered host MongoDB: mongodb://localhost:27017 (app data source)
+- Separate Compose MongoDB: mongodb://localhost:27018 (not used by app containers)
+
+To configure actual local model responses:
+    ollama pull qwen2.5:3b
+    ollama pull nomic-embed-text
+
+Then:
+    docker compose restart backend
+
+Optional: ingest multiple sample documents and verify every document creates chunks:
+    python scripts/ingest_sample_data.py
+
+Optional: run one read-only host posture scan:
+    python agent/scan_host.py
+
+Optional: repeat read-only posture snapshots every 15 minutes:
+    python agent/scan_host.py --watch --interval 900
+
+Stop containers without deleting persistent data:
+    .\stop.ps1
+
+IMPORTANT:
+- Never commit .env or API keys.
+- Synthetic threat records are demo data, not live threat intelligence.
+- Host scanner is read-only.
+- Remediation approval does not execute commands; operator carries out approved changes.
+- Do NOT use `docker compose down -v` unless you intentionally want to delete the project's MongoDB volume.

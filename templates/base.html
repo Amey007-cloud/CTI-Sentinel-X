@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07111d">
+<meta name="description" content="CTI Sentinel — evidence-led cyber threat intelligence, platform posture and AI-assisted response.">
+<title>{% block title %}CTI Sentinel X{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+<div class="ambient ambient-a"></div><div class="ambient ambient-b"></div><div class="grid-overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="/"><div class="brand-mark"><span></span><span></span><span></span></div><div><strong>CTI</strong><small>SENTINEL <em>X</em></small></div></a>
+  <div class="status-pill"><i></i><span id="side-status">INITIALIZING FABRIC</span></div>
+  <div class="nav-label">OPERATIONS</div>
+  <nav>
+    <a class="{% if request.path == '/' %}active{% endif %}" href="/"><span>⌂</span> Command Center</a>
+    <a class="{% if request.path == '/investigate' %}active{% endif %}" href="/investigate"><span>⌕</span> Investigate</a>
+    <a class="{% if request.path == '/threats' %}active{% endif %}" href="/threats"><span>◈</span> Threat Matrix</a>
+    <a class="{% if request.path == '/copilot' %}active{% endif %}" href="/copilot"><span>✳</span> AI Copilot <b class="nav-new">AI</b></a>
+  </nav>
+  <div class="nav-label">INTELLIGENCE</div>
+  <nav>
+    <a class="{% if request.path == '/knowledge' %}active{% endif %}" href="/knowledge"><span>▤</span> Knowledge Base</a>
+    <a class="{% if request.path == '/posture' %}active{% endif %}" href="/posture"><span>⌁</span> Host Posture</a>
+    <a class="{% if request.path.startswith('/reports') %}active{% endif %}" href="/reports"><span>▧</span> Reports & Evidence</a>
+  </nav>
+  <div class="sidebar-bottom"><div class="mini-label">INTELLIGENCE FABRIC</div><div id="sidebar-integrations"></div><div class="sidebar-version"><span class="version-dot"></span> SENTINEL CORE · v2.0</div></div>
+</aside>
+<div class="app-shell">
+<header class="topbar"><button class="icon-btn mobile-only" id="menu">☰</button><div class="crumb"><span>SECURITY OPERATIONS</span><b>/</b><strong>{% block crumb %}CTI SENTINEL X{% endblock %}</strong></div><div class="top-actions"><span class="environment-badge"><i></i> DEFENSIVE MODE</span><span class="clock" id="clock">--:--:-- UTC</span><button class="icon-btn" id="refresh" title="Refresh view">↻</button></div></header>
+<main class="main">{% block content %}{% endblock %}</main>
+</div>
+<div class="toast-stack" id="toasts"></div>
+<div class="modal-backdrop" id="modal-backdrop"><div class="analysis-modal"><button class="modal-close" id="modal-close">×</button><div id="modal-content"></div></div></div>
+<script>window.CTI_CONFIG={platforms:['ALL','WINDOWS','LINUX','MACOS','ANDROID','IOS']};</script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body></html>

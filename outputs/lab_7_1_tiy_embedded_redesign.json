@@ -1,0 +1,54 @@
+{
+  "activity": "7.1 Try-It-Yourself",
+  "generated_at": "2026-10-04T17:40:31.947453+00:00",
+  "redesigned_relationship": "threat -> iocs",
+  "original_design": {
+    "threat": {
+      "ioc_ids": [
+        "IOC-URL-001",
+        "IOC-IP-001"
+      ]
+    },
+    "iocs": [
+      {
+        "id": "IOC-URL-001",
+        "type": "url"
+      },
+      {
+        "id": "IOC-IP-001",
+        "type": "ip"
+      }
+    ]
+  },
+  "embedded_design": {
+    "name": "Embedded IOC Redesign",
+    "classification": {
+      "tier": 1,
+      "category": "phishing_campaign",
+      "confidence": 0.95
+    },
+    "iocs": [
+      {
+        "type": "url",
+        "value": "https://phishing.example.test/login",
+        "threat_level": "CRITICAL"
+      },
+      {
+        "type": "ip",
+        "value": "192.0.2.10",
+        "threat_level": "HIGH"
+      }
+    ]
+  },
+  "queries_that_become_faster": [
+    "Get a threat and its small IOC metadata in one document read.",
+    "Render a threat detail card without an additional IOC lookup."
+  ],
+  "queries_that_become_harder": [
+    "Find every threat containing a specific IOC.",
+    "Update one IOC globally when it is duplicated.",
+    "Prevent duplicate IOC records across many threats.",
+    "Maintain consistency when an IOC classification changes."
+  ],
+  "conclusion": "Embedding improves locality for bounded threat-specific metadata. Referencing remains preferable for reusable, high-cardinality IOCs."
+}

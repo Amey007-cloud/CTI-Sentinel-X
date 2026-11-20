@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}CTI Sentinel X — Threat Matrix{% endblock %}
+{% block crumb %}THREAT MATRIX{% endblock %}
+{% block content %}
+<section class="page-title page-title-wide"><div><div class="eyebrow">MULTI-PLATFORM INTELLIGENCE</div><h1>Threat <span>matrix</span></h1><p>Track anticipated, active, evolving and resolved intelligence. Use platform and severity filters to narrow the operational picture.</p></div><div class="page-title-stat"><strong id="threat-count">—</strong><span>RECORDS IN VIEW</span></div></section>
+<section class="filter-bar panel"><div class="filter-control"><label>PLATFORM</label><select id="filter-platform"><option>ALL</option><option>WINDOWS</option><option>LINUX</option><option>MACOS</option><option>ANDROID</option><option>IOS</option></select></div><div class="filter-control"><label>LIFECYCLE</label><select id="filter-status"><option>ALL</option><option>ANTICIPATED</option><option>ACTIVE</option><option>EVOLVING</option><option>RESOLVED</option></select></div><div class="filter-control"><label>SEVERITY</label><select id="filter-level"><option>ALL</option><option>CRITICAL</option><option>HIGH</option><option>MEDIUM</option><option>LOW</option></select></div><div class="filter-control search-filter"><label>SEARCH</label><input id="filter-search" placeholder="Threat, indicator or keyword…"></div><button class="secondary-btn" id="reset-filters">Reset</button></section>
+<div class="lifecycle-strip"><span><i class="life-dot anticipated"></i> Anticipated</span><span><i class="life-dot active"></i> Active</span><span><i class="life-dot evolving"></i> Evolving</span><span><i class="life-dot resolved"></i> Resolved</span><span class="demo-disclaimer">Synthetic demonstration records are labelled DEMO.</span></div>
+<section id="threat-matrix" class="threat-card-grid"><div class="loading-panel"><div class="loader"></div><b>Loading threat intelligence…</b></div></section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/threats.js') }}"></script>{% endblock %}

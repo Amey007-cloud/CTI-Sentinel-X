@@ -1,0 +1,92 @@
+{
+  "lab": "7.1",
+  "relationships": {
+    "embedded": [
+      {
+        "path": "threats.classification",
+        "reason": "Small bounded metadata belongs directly to the threat and is normally read together with it.",
+        "embedded_alternative": "Keep tier, category and confidence in the threat document."
+      },
+      {
+        "path": "threats.tags",
+        "reason": "Small threat-specific metadata is naturally represented as an array inside the threat document.",
+        "embedded_alternative": "Keep tags as an array in the threat document."
+      }
+    ],
+    "referenced": [
+      {
+        "path": "threats.ioc_ids -> iocs",
+        "reason": "IOCs are reusable, potentially high-cardinality objects that may belong to multiple threats.",
+        "embedded_alternative": "Embed IOC objects in every threat. This improves locality but duplicates data and makes global IOC updates harder."
+      },
+      {
+        "path": "threats.source_ids -> sources",
+        "reason": "Sources are shared across many threats and should not be duplicated in every threat.",
+        "embedded_alternative": "Copy source metadata into every threat, increasing duplication and update cost."
+      },
+      {
+        "path": "threats.report_ids -> reports",
+        "reason": "One report can describe many threats and may contain larger Markdown content.",
+        "embedded_alternative": "Embed report content into threats, increasing document size and duplication."
+      }
+    ]
+  },
+  "bson_size_analysis": {
+    "generated_at": "2026-10-04T17:40:26.528653+00:00",
+    "limit_bytes": 16777216,
+    "collections": {
+      "threats": {
+        "count": 6,
+        "average_bytes": 684.33,
+        "min_bytes": 632,
+        "max_bytes": 723,
+        "near_16mb_count": 0,
+        "max_percent_of_limit": 0.0043
+      },
+      "iocs": {
+        "count": 6,
+        "average_bytes": 207.17,
+        "min_bytes": 170,
+        "max_bytes": 248,
+        "near_16mb_count": 0,
+        "max_percent_of_limit": 0.0015
+      },
+      "sources": {
+        "count": 5,
+        "average_bytes": 186.6,
+        "min_bytes": 171,
+        "max_bytes": 221,
+        "near_16mb_count": 0,
+        "max_percent_of_limit": 0.0013
+      },
+      "reports": {
+        "count": 2,
+        "average_bytes": 612.5,
+        "min_bytes": 567,
+        "max_bytes": 658,
+        "near_16mb_count": 0,
+        "max_percent_of_limit": 0.0039
+      },
+      "misp_events": {
+        "count": 2,
+        "average_bytes": 297.0,
+        "min_bytes": 261,
+        "max_bytes": 333,
+        "near_16mb_count": 0,
+        "max_percent_of_limit": 0.002
+      },
+      "security_solutions": {
+        "count": 8,
+        "average_bytes": 187.0,
+        "min_bytes": 169,
+        "max_bytes": 202,
+        "near_16mb_count": 0,
+        "max_percent_of_limit": 0.0012
+      }
+    }
+  },
+  "16mb_verification": {
+    "passed": true,
+    "rule": "All analyzed documents remain below MongoDB's 16 MiB BSON document limit."
+  }
+}

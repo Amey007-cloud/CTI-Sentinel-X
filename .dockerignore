@@ -1,0 +1,25 @@
+.env
+.venv
+venv
+__pycache__
+*.pyc
+.git
+.pytest_cache
+.mypy_cache
+.coverage
+htmlcov
+data/uploads/*
+!data/uploads/.gitkeep
+data/reports/*
+!data/reports/README.md
+
+# Sensitive local state, backups and training-only data
+.env.*
+!.env.example
+recovery_backup/
+data/raw/
+data/processed/
+models/
+ml_training/artifacts/
+reports/evaluation.json
+reports/test_predictions_anonymized.csv
